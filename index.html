@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 1;
+            position: relative;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 90%;
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #d63384;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .message {
+            font-size: 1.3em;
+            color: #555;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Georgia', serif;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-width: 120px;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-yes:active {
+            transform: scale(0.95);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            min-width: 120px;
+        }
+
+        .btn-no:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn-no:active {
+            transform: translateY(0);
+        }
+
+        .celebration {
+            display: none;
+            animation: fadeIn 1s ease-in;
+        }
+
+        .celebration h2 {
+            font-size: 2.5em;
+            color: #d63384;
+            margin-bottom: 20px;
+        }
+
+        .celebration p {
+            font-size: 1.5em;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .sparkles {
+            font-size: 2em;
+            animation: sparkle 1s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
+            50% {
+                transform: scale(1.3) rotate(180deg);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #d63384;
+            animation: confetti-fall 3s linear infinite;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 10;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            margin: 0 5px;
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #d63384;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-family: 'Georgia', serif;
+        }
+
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        @media (max-width: 600px) {
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .lang-btn {
+                padding: 6px 12px;
+                font-size: 0.8em;
+                margin: 0 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="language-selector">
+        <button class="lang-btn active" id="langEn" onclick="changeLanguage('en')">English</button>
+        <button class="lang-btn" id="langZh" onclick="changeLanguage('zh')">中文</button>
+    </div>
+    
+    <div class="container" id="container">
+        <div id="question">
+            <h1 data-i18n="title">💕 Will You Be My Valentine? 💕</h1>
+            <p class="message" data-i18n="intro">
+                In this world of billions, you found a special place in my heart.<br>
+                Your smile lights up my world, and your presence makes everything better.<br>
+                I can't imagine celebrating this day of love without you by my side.
+            </p>
+            <p class="message" style="font-weight: bold; color: #d63384; margin-top: 20px;" data-i18n="question">
+                Would you do me the honor of being my Valentine? 🌹
+            </p>
+            <div class="button-container">
+                <button class="btn btn-yes" id="yesBtn" style="font-size: 1.2em;" data-i18n="yesBtn">Yes! 💖</button>
+                <button class="btn btn-no" id="noBtn" data-i18n="noBtn">No</button>
+            </div>
+        </div>
+
+        <div class="celebration" id="celebration">
+            <h2 data-i18n="celebrationTitle">🎉 Yay! 🎉</h2>
+            <p class="sparkles" data-i18n="celebrationSparkles">✨ You've made me the happiest person in the world! ✨</p>
+            <p class="message" data-i18n="celebrationMessage">
+                Thank you for saying yes! This Valentine's Day will be magical because I get to spend it with you. 
+                You mean everything to me, and I'm so grateful to have you in my life. 
+                Let's make beautiful memories together! 💕
+            </p>
+            <p style="font-size: 2em; margin-top: 30px;" data-i18n="celebrationEnd">💖 Happy Valentine's Day! 💖</p>
+        </div>
+    </div>
+
+    <script>
+        let yesSize = 1.2;
+        let noClickCount = 0;
+        let currentLang = 'en';
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+        const celebration = document.getElementById('celebration');
+        const heartsContainer = document.getElementById('hearts');
+
+        // Translations
+        const translations = {
+            en: {
+                title: "💕 Will You Be My Valentine? 💕",
+                intro: "In this world of billions, you found a special place in my heart.<br>Your smile lights up my world, and your presence makes everything better.<br>I can't imagine celebrating this day of love without you by my side.",
+                question: "Would you do me the honor of being my Valentine? 🌹",
+                yesBtn: "Yes! 💖",
+                noBtn: "No",
+                celebrationTitle: "🎉 Yay! 🎉",
+                celebrationSparkles: "✨ You've made me the happiest person in the world! ✨",
+                celebrationMessage: "Thank you for saying yes! This Valentine's Day will be magical because I get to spend it with you. You mean everything to me, and I'm so grateful to have you in my life. Let's make beautiful memories together! 💕",
+                celebrationEnd: "💖 Happy Valentine's Day! 💖",
+                noMessages: [
+                    "Are you sure? 😊",
+                    "Please reconsider! 💕",
+                    "I'll keep asking! 😄",
+                    "Pretty please? 🌹",
+                    "You can't resist forever! 😉",
+                    "I'm not giving up! 💖",
+                    "One more chance? ✨",
+                    "You know you want to! 😍"
+                ],
+                noMessageSuffix: "Would you be my Valentine? 💕"
+            },
+            zh: {
+                title: "💕 你愿意做我的情人吗？ 💕",
+                intro: "在这个拥有数十亿人的世界里，你在我心中找到了一个特殊的位置。<br>你的笑容点亮了我的世界，你的存在让一切都变得更美好。<br>我无法想象没有你在身边庆祝这个充满爱的日子。",
+                question: "你愿意给我这个荣幸，做我的情人吗？ 🌹",
+                yesBtn: "愿意！ 💖",
+                noBtn: "不愿意",
+                celebrationTitle: "🎉 太好了！ 🎉",
+                celebrationSparkles: "✨ 你让我成为了世界上最幸福的人！ ✨",
+                celebrationMessage: "谢谢你答应了！这个情人节将会是神奇的，因为我能和你一起度过。你对我来说意味着一切，我很感激生命中有你。让我们一起创造美好的回忆吧！ 💕",
+                celebrationEnd: "💖 情人节快乐！ 💖",
+                noMessages: [
+                    "你确定吗？ 😊",
+                    "请再考虑一下！ 💕",
+                    "我会继续问的！ 😄",
+                    "拜托了？ 🌹",
+                    "你不可能永远拒绝的！ 😉",
+                    "我不会放弃的！ 💖",
+                    "再给一次机会？ ✨",
+                    "你知道你想答应的！ 😍"
+                ],
+                noMessageSuffix: "你愿意做我的情人吗？ 💕"
+            }
+        };
+
+        // Change language function
+        function changeLanguage(lang) {
+            currentLang = lang;
+            
+            // Update active button
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('lang' + (lang === 'en' ? 'En' : 'Zh')).classList.add('active');
+            
+            // Update page title
+            document.title = lang === 'en' ? 'Will You Be My Valentine? 💕' : '你愿意做我的情人吗？ 💕';
+            
+            // Update all text elements
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            
+            // Reset no click count to update button text
+            if (noClickCount > 0) {
+                const messageElement = document.querySelector('.message');
+                if (messageElement && noClickCount <= translations[lang].noMessages.length) {
+                    const messageIndex = Math.min(noClickCount - 1, translations[lang].noMessages.length - 1);
+                    messageElement.innerHTML = translations[lang].noMessages[messageIndex] + '<br><br>' + translations[lang].noMessageSuffix;
+                }
+            }
+        }
+
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 6 + 's';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 10000);
+        }
+
+        // Create hearts periodically
+        setInterval(createHeart, 500);
+
+        // Yes button click
+        yesBtn.addEventListener('click', function() {
+            question.style.display = 'none';
+            celebration.style.display = 'block';
+            
+            // Create confetti
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = ['#d63384', '#667eea', '#764ba2', '#f093fb', '#f5576c'][Math.floor(Math.random() * 5)];
+                    confetti.style.animationDelay = Math.random() * 2 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 3000);
+                }, i * 50);
+            }
+        });
+
+        // No button click
+        noBtn.addEventListener('click', function() {
+            noClickCount++;
+            yesSize += 0.2;
+            yesBtn.style.fontSize = yesSize + 'em';
+            yesBtn.style.padding = (15 + noClickCount * 5) + 'px ' + (40 + noClickCount * 10) + 'px';
+            
+            // Move no button randomly
+            const maxX = window.innerWidth - noBtn.offsetWidth - 100;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 100;
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            
+            // Add playful messages based on current language
+            const messages = translations[currentLang].noMessages;
+            const messageIndex = Math.min(noClickCount - 1, messages.length - 1);
+            const messageElement = document.querySelector('.message');
+            if (messageElement && noClickCount <= messages.length) {
+                messageElement.innerHTML = messages[messageIndex] + '<br><br>' + translations[currentLang].noMessageSuffix;
+            }
+        });
+
+        // Make no button harder to click after a few attempts
+        noBtn.addEventListener('mouseenter', function() {
+            if (noClickCount > 3) {
+                const maxX = window.innerWidth - noBtn.offsetWidth - 100;
+                const maxY = window.innerHeight - noBtn.offsetHeight - 100;
+                const randomX = Math.random() * maxX;
+                const randomY = Math.random() * maxY;
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+            }
+        });
+    </script>
+</body>
+</html>
