@@ -348,10 +348,10 @@
     </div>
 
     <script>
-        // URL parameters: ?name_from=Sender&name_to=Recipient (defaults: Pawat, Jomjam)
+        // URL parameters: ?name_from=Sender&name_to=Recipient (defaults: me, you)
         const urlParams = new URLSearchParams(window.location.search);
-        const name_from = decodeURIComponent((urlParams.get('name_from') || 'Pawat').trim()) || 'Pawat';
-        const name_to = decodeURIComponent((urlParams.get('name_to') || 'Jomjam').trim()) || 'Jomjam';
+        const name_from = decodeURIComponent((urlParams.get('name_from') || 'me').trim()) || 'me';
+        const name_to = decodeURIComponent((urlParams.get('name_to') || 'you').trim()) || 'you';
 
         let yesSize = 1.2;
         let noClickCount = 0;
