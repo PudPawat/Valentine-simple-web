@@ -348,6 +348,11 @@
     </div>
 
     <script>
+        // URL parameters: ?name_from=Sender&name_to=Recipient (defaults: Pawat, Jomjam)
+        const urlParams = new URLSearchParams(window.location.search);
+        const name_from = decodeURIComponent((urlParams.get('name_from') || 'Pawat').trim()) || 'Pawat';
+        const name_to = decodeURIComponent((urlParams.get('name_to') || 'Jomjam').trim()) || 'Jomjam';
+
         let yesSize = 1.2;
         let noClickCount = 0;
         let currentLang = 'en';
@@ -357,11 +362,16 @@
         const celebration = document.getElementById('celebration');
         const heartsContainer = document.getElementById('hearts');
 
-        // Translations
+        function applyNames(str) {
+            if (typeof str !== 'string') return str;
+            return str.replace(/\{\{name_from\}\}/g, name_from).replace(/\{\{name_to\}\}/g, name_to);
+        }
+
+        // Translations (use {{name_from}} and {{name_to}} as placeholders)
         const translations = {
             en: {
-                title: "💕 Will You Be My Valentine? 💕",
-                intro: "In this world of billions, you found a special place in my heart.<br>Your smile lights up my world, and your presence makes everything better.<br>I can't imagine celebrating this day of love without you by my side.",
+                title: "💕 Will You Be My Valentine, {{name_to}}? 💕",
+                intro: "Dear {{name_to}},<br>In this world of billions, you found a special place in my heart.<br>Your smile lights up my world, and your presence makes everything better.<br>I can't imagine celebrating this day of love without you by my side.",
                 question: "Would you do me the honor of being my Valentine? 🌹",
                 yesBtn: "Yes! 💖",
                 noBtn: "No",
@@ -369,7 +379,7 @@
                 celebrationSparkles: "✨ You've made me the happiest person in the world! ✨",
                 celebrationMessage: "Thank you for saying yes! This Valentine's Day will be magical because I get to spend it with you. You mean everything to me, and I'm so grateful to have you in my life. Let's make beautiful memories together! 💕",
                 celebrationEnd: "💖 Happy Valentine's Day! 💖",
-                signature: "With all my love,<br><span class=\"signature-name\">PudPawat</span> 💕",
+                signature: "With all my love,<br><span class=\"signature-name\">{{name_from}}</span> 💕",
                 noMessages: [
                     "Are you sure? 😊",
                     "Please reconsider! 💕",
@@ -383,8 +393,8 @@
                 noMessageSuffix: "Would you be my Valentine? 💕"
             },
             zh: {
-                title: "💕 你愿意做我的情人吗？ 💕",
-                intro: "在这个拥有数十亿人的世界里，你在我心中找到了一个特殊的位置。<br>你的笑容点亮了我的世界，你的存在让一切都变得更美好。<br>我无法想象没有你在身边庆祝这个充满爱的日子。",
+                title: "💕 {{name_to}}，你愿意做我的情人吗？ 💕",
+                intro: "亲爱的 {{name_to}}，<br>在这个拥有数十亿人的世界里，你在我心中找到了一个特殊的位置。<br>你的笑容点亮了我的世界，你的存在让一切都变得更美好。<br>我无法想象没有你在身边庆祝这个充满爱的日子。",
                 question: "你愿意给我这个荣幸，做我的情人吗？ 🌹",
                 yesBtn: "愿意！ 💖",
                 noBtn: "不愿意",
@@ -392,7 +402,7 @@
                 celebrationSparkles: "✨ 你让我成为了世界上最幸福的人！ ✨",
                 celebrationMessage: "谢谢你答应了！这个情人节将会是神奇的，因为我能和你一起度过。你对我来说意味着一切，我很感激生命中有你。让我们一起创造美好的回忆吧！ 💕",
                 celebrationEnd: "💖 情人节快乐！ 💖",
-                signature: "用我全部的爱，<br><span class=\"signature-name\">PudPawat</span> 💕",
+                signature: "用我全部的爱，<br><span class=\"signature-name\">{{name_from}}</span> 💕",
                 noMessages: [
                     "你确定吗？ 😊",
                     "请再考虑一下！ 💕",
@@ -417,14 +427,14 @@
             });
             document.getElementById('lang' + (lang === 'en' ? 'En' : 'Zh')).classList.add('active');
             
-            // Update page title
-            document.title = lang === 'en' ? 'Will You Be My Valentine? 💕' : '你愿意做我的情人吗？ 💕';
+            // Update page title with name_to
+            document.title = lang === 'en' ? `Will You Be My Valentine, ${name_to}? 💕` : `${name_to}，你愿意做我的情人吗？ 💕`;
             
-            // Update all text elements
+            // Update all text elements (with name placeholders applied)
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang][key]) {
-                    element.innerHTML = translations[lang][key];
+                    element.innerHTML = applyNames(translations[lang][key]);
                 }
             });
             
@@ -433,10 +443,13 @@
                 const messageElement = document.querySelector('.message');
                 if (messageElement && noClickCount <= translations[lang].noMessages.length) {
                     const messageIndex = Math.min(noClickCount - 1, translations[lang].noMessages.length - 1);
-                    messageElement.innerHTML = translations[lang].noMessages[messageIndex] + '<br><br>' + translations[lang].noMessageSuffix;
+                    messageElement.innerHTML = applyNames(translations[lang].noMessages[messageIndex] + '<br><br>' + translations[lang].noMessageSuffix);
                 }
             }
         }
+
+        // Apply names and language on initial load
+        changeLanguage('en');
 
         // Create floating hearts
         function createHeart() {
