@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will You Be My Girlfriend, Kim? 💕</title>
+    <link rel="preload" as="image" href="photos/thumbs/22221_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/22222_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/22223_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/22224_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/22225_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/22226_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/22227_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/22228_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/535547_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/535548_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/535549_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/535550_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/535551_0.jpg">
+    <link rel="preload" as="image" href="photos/thumbs/535552_0.jpg">
     <script type="text/javascript">
       !function(q,g,r,a,p,h,js) {
         q.appier=q.qg;
@@ -48,25 +62,26 @@
 
         .photo-collage {
             position: fixed;
-            inset: -8%;
+            inset: -6%;
             z-index: 0;
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 18px;
-            transform: rotate(-6deg) scale(1.15);
+            grid-template-columns: repeat(8, 1fr);
+            gap: 14px;
+            transform: rotate(-6deg) scale(1.08);
             pointer-events: none;
         }
 
         .polaroid {
             background: rgba(255, 255, 255, 0.95);
-            padding: 10px 10px 28px;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+            padding: 8px 8px 22px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
             animation: drift 14s ease-in-out infinite;
+            contain: layout paint;
         }
 
         .polaroid img {
             width: 100%;
-            height: 220px;
+            height: 176px;
             object-fit: cover;
             display: block;
             background: linear-gradient(135deg, #f093fb, #667eea);
@@ -75,7 +90,7 @@
         .polaroid:nth-child(3n) { transform: rotate(4deg); animation-delay: -2s; }
         .polaroid:nth-child(3n + 1) { transform: rotate(-5deg); animation-delay: -5s; }
         .polaroid:nth-child(3n + 2) { transform: rotate(2deg); animation-delay: -8s; }
-        .polaroid:nth-child(even) img { height: 260px; }
+        .polaroid:nth-child(even) img { height: 208px; }
 
         @keyframes drift {
             0%, 100% { translate: 0 0; }
@@ -318,7 +333,7 @@
 
         @media (max-width: 800px) {
             .photo-collage {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(5, 1fr);
             }
         }
 
@@ -326,6 +341,11 @@
             body {
                 padding: 10px 0;
                 align-items: flex-start;
+            }
+
+            .photo-collage {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
             }
 
             .container {
@@ -369,11 +389,11 @@
             }
 
             .polaroid img {
-                height: 150px;
+                height: 120px;
             }
 
             .polaroid:nth-child(even) img {
-                height: 180px;
+                height: 144px;
             }
         }
     </style>
@@ -429,20 +449,20 @@
         // Put files in the photos/ folder, then list them below.
         // Example: 'photos/us-at-the-beach.jpg'
         const PHOTO_FILES = [
-            'photos/22221_0.jpg',
-            'photos/22222_0.jpg',
-            'photos/22223_0.jpg',
-            'photos/22224_0.jpg',
-            'photos/22225_0.jpg',
-            'photos/22226_0.jpg',
-            'photos/22227_0.jpg',
-            'photos/22228_0.jpg',
-            'photos/535547_0.jpg',
-            'photos/535548_0.jpg',
-            'photos/535549_0.jpg',
-            'photos/535550_0.jpg',
-            'photos/535551_0.jpg',
-            'photos/535552_0.jpg'
+            'photos/thumbs/22221_0.jpg',
+            'photos/thumbs/22222_0.jpg',
+            'photos/thumbs/22223_0.jpg',
+            'photos/thumbs/22224_0.jpg',
+            'photos/thumbs/22225_0.jpg',
+            'photos/thumbs/22226_0.jpg',
+            'photos/thumbs/22227_0.jpg',
+            'photos/thumbs/22228_0.jpg',
+            'photos/thumbs/535547_0.jpg',
+            'photos/thumbs/535548_0.jpg',
+            'photos/thumbs/535549_0.jpg',
+            'photos/thumbs/535550_0.jpg',
+            'photos/thumbs/535551_0.jpg',
+            'photos/thumbs/535552_0.jpg'
         ];
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -582,13 +602,19 @@
         }
 
         function buildCollage() {
-            const copies = Math.max(18, PHOTO_FILES.length * 2);
+            const copies = 40;
             for (let i = 0; i < copies; i++) {
                 const frame = document.createElement('div');
                 frame.className = 'polaroid';
                 const img = document.createElement('img');
                 img.src = PHOTO_FILES[i % PHOTO_FILES.length];
                 img.alt = '';
+                img.decoding = 'async';
+                img.width = 180;
+                img.height = 176;
+                if (i < PHOTO_FILES.length) {
+                    img.fetchPriority = 'high';
+                }
                 frame.appendChild(img);
                 collage.appendChild(frame);
             }

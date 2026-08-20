@@ -1,5 +1,4 @@
 # Photos for the proposal page
 
-These 14 photos were copied from the shared Google Drive folder into this project so the page can load them reliably.
-
-To add more later, drop files here and list them in `PHOTO_FILES` inside `proposal.html`.
+1. Drop your pictures into this folder (or `thumbs/` for the collage).
+2. Open `proposal.html` and update the `PHOTO_FILES` list to use the smaller `photos/thumbs/` files so the background loads faster.
