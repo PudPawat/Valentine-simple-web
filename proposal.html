@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Valentine, Kim? 💕</title>
+    <title>Will You Be My Girlfriend, Kim? 💕</title>
     <script type="text/javascript">
       !function(q,g,r,a,p,h,js) {
         q.appier=q.qg;
@@ -35,7 +35,6 @@
 
         body {
             font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -44,14 +43,61 @@
             overflow-x: hidden;
             position: relative;
             padding: 20px 0;
+            background: #1a1024;
+        }
+
+        .photo-collage {
+            position: fixed;
+            inset: -8%;
+            z-index: 0;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 18px;
+            transform: rotate(-6deg) scale(1.15);
+            pointer-events: none;
+        }
+
+        .polaroid {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 10px 28px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+            animation: drift 14s ease-in-out infinite;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, #f093fb, #667eea);
+        }
+
+        .polaroid:nth-child(3n) { transform: rotate(4deg); animation-delay: -2s; }
+        .polaroid:nth-child(3n + 1) { transform: rotate(-5deg); animation-delay: -5s; }
+        .polaroid:nth-child(3n + 2) { transform: rotate(2deg); animation-delay: -8s; }
+        .polaroid:nth-child(even) img { height: 260px; }
+
+        @keyframes drift {
+            0%, 100% { translate: 0 0; }
+            50% { translate: 0 -12px; }
+        }
+
+        .photo-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background:
+                linear-gradient(180deg, rgba(26, 16, 36, 0.35) 0%, rgba(118, 75, 162, 0.45) 50%, rgba(214, 51, 132, 0.4) 100%),
+                radial-gradient(circle at center, rgba(255, 255, 255, 0.08), transparent 55%);
+            pointer-events: none;
         }
 
         .hearts {
-            position: absolute;
-            width: 100%;
-            height: 100%;
+            position: fixed;
+            inset: 0;
             overflow: hidden;
-            z-index: 0;
+            z-index: 2;
+            pointer-events: none;
         }
 
         .heart {
@@ -62,7 +108,7 @@
         }
 
         @keyframes float {
-            0%, 100% {
+            0% {
                 transform: translateY(0) rotate(0deg);
                 opacity: 0;
             }
@@ -77,13 +123,14 @@
 
         .container {
             text-align: center;
-            z-index: 1;
+            z-index: 3;
             position: relative;
             padding: 40px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
             border-radius: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+            max-width: 640px;
             width: 90%;
             animation: fadeIn 1s ease-in;
             margin: 20px auto;
@@ -101,28 +148,32 @@
         }
 
         h1 {
-            font-size: 3em;
+            font-size: 2.6em;
             color: #d63384;
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             animation: pulse 2s ease-in-out infinite;
+            line-height: 1.25;
         }
 
         @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
         }
 
         .message {
-            font-size: 1.3em;
+            font-size: 1.2em;
             color: #555;
-            margin-bottom: 40px;
-            line-height: 1.6;
+            margin-bottom: 24px;
+            line-height: 1.7;
             font-style: italic;
+        }
+
+        .question-line {
+            font-weight: bold;
+            color: #d63384;
+            margin-top: 8px;
+            font-style: normal;
         }
 
         .button-container {
@@ -150,7 +201,7 @@
         .btn-yes {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            min-width: 120px;
+            min-width: 140px;
         }
 
         .btn-yes:hover {
@@ -173,39 +224,31 @@
             box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
         }
 
-        .btn-no:active {
-            transform: translateY(0);
-        }
-
         .celebration {
             display: none;
             animation: fadeIn 1s ease-in;
         }
 
         .celebration h2 {
-            font-size: 2.5em;
+            font-size: 2.4em;
             color: #d63384;
             margin-bottom: 20px;
         }
 
         .celebration p {
-            font-size: 1.5em;
+            font-size: 1.35em;
             color: #555;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
         }
 
         .sparkles {
-            font-size: 2em;
+            font-size: 1.6em;
             animation: sparkle 1s ease-in-out infinite;
         }
 
         @keyframes sparkle {
-            0%, 100% {
-                transform: scale(1) rotate(0deg);
-            }
-            50% {
-                transform: scale(1.3) rotate(180deg);
-            }
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(12deg); }
         }
 
         .confetti {
@@ -214,6 +257,7 @@
             height: 10px;
             background: #d63384;
             animation: confetti-fall 3s linear infinite;
+            z-index: 20;
         }
 
         @keyframes confetti-fall {
@@ -272,6 +316,12 @@
             font-size: 1.2em;
         }
 
+        @media (max-width: 800px) {
+            .photo-collage {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 10px 0;
@@ -280,30 +330,32 @@
 
             .container {
                 padding: 25px 20px;
-                margin: 10px auto;
+                margin: 70px auto 20px;
                 width: 95%;
                 border-radius: 20px;
             }
 
             h1 {
-                font-size: 2em;
+                font-size: 1.7em;
                 margin-bottom: 15px;
             }
 
             .message {
-                font-size: 1.1em;
-                margin-bottom: 30px;
+                font-size: 1.05em;
+                margin-bottom: 20px;
             }
 
             .language-selector {
                 top: 10px;
                 right: 10px;
+                left: 10px;
+                text-align: right;
             }
-            
+
             .lang-btn {
-                padding: 6px 12px;
-                font-size: 0.8em;
-                margin: 0 3px;
+                padding: 6px 10px;
+                font-size: 0.75em;
+                margin: 0 2px;
             }
 
             .button-container {
@@ -312,37 +364,41 @@
             }
 
             .btn {
-                padding: 12px 30px;
+                padding: 12px 28px;
                 font-size: 1em;
             }
 
-            .signature {
-                margin-top: 30px;
-                padding-top: 15px;
-                font-size: 1em;
+            .polaroid img {
+                height: 150px;
+            }
+
+            .polaroid:nth-child(even) img {
+                height: 180px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="photo-collage" id="photoCollage"></div>
+    <div class="photo-overlay"></div>
     <div class="hearts" id="hearts"></div>
-    
+
     <div class="language-selector">
         <button class="lang-btn active" id="langEn" onclick="changeLanguage('en')">English</button>
+        <button class="lang-btn" id="langTh" onclick="changeLanguage('th')">ไทย</button>
         <button class="lang-btn" id="langZh" onclick="changeLanguage('zh')">中文</button>
     </div>
-    
+
     <div class="container" id="container">
         <div id="question">
-            <h1 data-i18n="title">💕 Will You Be My Valentine, Kim? 💕</h1>
+            <h1 data-i18n="title">💕 Kim, will you be my girlfriend? 💕</h1>
             <p class="message" data-i18n="intro">
                 Dear Kim,<br>
-                In this world of billions, you found a special place in my heart.<br>
-                Your smile lights up my world, and your presence makes everything better.<br>
-                I can't imagine celebrating this day of love without you by my side.
+                Every photo behind this page is a piece of us.<br>
+                I keep falling for you — your laugh, your kindness, the way you make ordinary days feel special.
             </p>
-            <p class="message" style="font-weight: bold; color: #d63384; margin-top: 20px;" data-i18n="question">
-                Would you do me the honor of being my Valentine? 🌹
+            <p class="message question-line" data-i18n="question">
+                Kim, will you be my official girlfriend? 🌹
             </p>
             <div class="button-container">
                 <button class="btn btn-yes" id="yesBtn" style="font-size: 1.2em;" data-i18n="yesBtn">Yes! 💖</button>
@@ -355,14 +411,12 @@
         </div>
 
         <div class="celebration" id="celebration">
-            <h2 data-i18n="celebrationTitle">🎉 Yay! 🎉</h2>
-            <p class="sparkles" data-i18n="celebrationSparkles">✨ You've made me the happiest person in the world! ✨</p>
+            <h2 data-i18n="celebrationTitle">🎉 She said yes 🎉</h2>
+            <p class="sparkles" data-i18n="celebrationSparkles">✨ You just made me the happiest person alive ✨</p>
             <p class="message" data-i18n="celebrationMessage">
-                Thank you for saying yes! This Valentine's Day will be magical because I get to spend it with you. 
-                You mean everything to me, and I'm so grateful to have you in my life. 
-                Let's make beautiful memories together! 💕
+                Officially yours. I promise to keep choosing you, every day, in every little moment.
             </p>
-            <p style="font-size: 2em; margin-top: 30px;" data-i18n="celebrationEnd">💖 Happy Valentine's Day! 💖</p>
+            <p style="font-size: 1.8em; margin-top: 20px;" data-i18n="celebrationEnd">💖 I love you 💖</p>
             <div class="signature" data-i18n="signature">
                 With all my love,<br>
                 <span class="signature-name">PudPawat</span> 💕
@@ -371,10 +425,42 @@
     </div>
 
     <script>
-        // URL parameters: ?name_from=Sender&name_to=Recipient (defaults: PudPawat, Kim)
+        // ====== ADD YOUR PHOTOS HERE ======
+        // Put files in the photos/ folder, then list them below.
+        // Example: 'photos/us-at-the-beach.jpg'
+        const PHOTO_FILES = [
+            'photos/22221_0.jpg',
+            'photos/22222_0.jpg',
+            'photos/22223_0.jpg',
+            'photos/22224_0.jpg',
+            'photos/22225_0.jpg',
+            'photos/22226_0.jpg',
+            'photos/22227_0.jpg',
+            'photos/22228_0.jpg',
+            'photos/535547_0.jpg',
+            'photos/535548_0.jpg',
+            'photos/535549_0.jpg',
+            'photos/535550_0.jpg',
+            'photos/535551_0.jpg',
+            'photos/535552_0.jpg'
+        ];
+
         const urlParams = new URLSearchParams(window.location.search);
-        const name_from = decodeURIComponent((urlParams.get('name_from') || 'PudPawat').trim()) || 'PudPawat';
-        const name_to = decodeURIComponent((urlParams.get('name_to') || 'Kim').trim()) || 'Kim';
+        const name_from_override = (urlParams.get('name_from') || '').trim();
+        const name_to_override = (urlParams.get('name_to') || '').trim();
+        const defaultNames = {
+            en: { from: 'PudPawat', to: 'Kim' },
+            th: { from: 'PudPawat', to: 'ขิม' },
+            zh: { from: 'PudPawat', to: 'Kim' }
+        };
+
+        function namesFor(lang) {
+            const defaults = defaultNames[lang] || defaultNames.en;
+            return {
+                from: decodeURIComponent(name_from_override || defaults.from),
+                to: decodeURIComponent(name_to_override || defaults.to)
+            };
+        }
 
         let yesSize = 1.2;
         let noClickCount = 0;
@@ -384,24 +470,25 @@
         const question = document.getElementById('question');
         const celebration = document.getElementById('celebration');
         const heartsContainer = document.getElementById('hearts');
+        const collage = document.getElementById('photoCollage');
 
-        function applyNames(str) {
+        function applyNames(str, lang = currentLang) {
             if (typeof str !== 'string') return str;
-            return str.replace(/\{\{name_from\}\}/g, name_from).replace(/\{\{name_to\}\}/g, name_to);
+            const names = namesFor(lang);
+            return str.replace(/\{\{name_from\}\}/g, names.from).replace(/\{\{name_to\}\}/g, names.to);
         }
 
-        // Translations (use {{name_from}} and {{name_to}} as placeholders)
         const translations = {
             en: {
-                title: "💕 Will You Be My Valentine, {{name_to}}? 💕",
-                intro: "Dear {{name_to}},<br>In this world of billions, you found a special place in my heart.<br>Your smile lights up my world, and your presence makes everything better.<br>I can't imagine celebrating this day of love without you by my side.",
-                question: "Would you do me the honor of being my Valentine? 🌹",
+                title: "💕 {{name_to}}, will you be my girlfriend? 💕",
+                intro: "Dear {{name_to}},<br>Every photo behind this page is a piece of us.<br>I keep falling for you — your laugh, your kindness, the way you make ordinary days feel special.",
+                question: "{{name_to}}, will you be my official girlfriend? 🌹",
                 yesBtn: "Yes! 💖",
                 noBtn: "No",
-                celebrationTitle: "🎉 Yay! 🎉",
-                celebrationSparkles: "✨ You've made me the happiest person in the world! ✨",
-                celebrationMessage: "Thank you for saying yes! This Valentine's Day will be magical because I get to spend it with you. You mean everything to me, and I'm so grateful to have you in my life. Let's make beautiful memories together! 💕",
-                celebrationEnd: "💖 Happy Valentine's Day! 💖",
+                celebrationTitle: "🎉 You said yes! 🎉",
+                celebrationSparkles: "✨ {{name_to}}, you just made me the happiest person alive ✨",
+                celebrationMessage: "Officially yours, {{name_to}}. I promise to keep choosing you, every day, in every little moment.",
+                celebrationEnd: "💖 I love you, {{name_to}} 💖",
                 signature: "With all my love,<br><span class=\"signature-name\">{{name_from}}</span> 💕",
                 noMessages: [
                     "Are you sure? 😊",
@@ -413,18 +500,41 @@
                     "One more chance? ✨",
                     "You know you want to! 😍"
                 ],
-                noMessageSuffix: "Would you be my Valentine? 💕"
+                noMessageSuffix: "{{name_to}}, will you be my official girlfriend? 💕"
+            },
+            th: {
+                title: "💕 {{name_to}} เป็นแฟนกันนะ 💕",
+                intro: "{{name_to}} นะ,<br>ทุกภาพด้านหลังนี้คือเรื่องของเราสองคน<br>ชอบเธอทุกวันเลย รอยยิ้ม ความน่ารัก แล้วก็วันที่ธรรมดาที่เธอทำให้พิเศษจัง",
+                question: "เป็นแฟนกันนะ 🌹",
+                yesBtn: "เป็นสิ! 💖",
+                noBtn: "ไม่",
+                celebrationTitle: "🎉 เป็นแฟนกันแล้ว! 🎉",
+                celebrationSparkles: "✨ ดีใจมากเลยนะ {{name_to}} ✨",
+                celebrationMessage: "จากนี้เป็นแฟนกันแล้วนะ สัญญาว่าจะทำให้เธอมีความสุขทุกวัน",
+                celebrationEnd: "💖 รักนะ {{name_to}} 💖",
+                signature: "รักนะ,<br><span class=\"signature-name\">{{name_from}}</span> 💕",
+                noMessages: [
+                    "แน่ใจเหรอ? 😊",
+                    "คิดอีกทีสิ 💕",
+                    "ขอถามอีกได้มั้ย 😄",
+                    "หน่อยๆ นะ 🌹",
+                    "กดไม่ไม่ได้นะ 😉",
+                    "ยังไม่ยอมแพ้หรอก 💖",
+                    "อีกทีนะ ✨",
+                    "ก็อยากเป็นอยู่แล้วนี่นา 😍"
+                ],
+                noMessageSuffix: "เป็นแฟนกันนะ 💕"
             },
             zh: {
-                title: "💕 {{name_to}}，你愿意做我的情人吗？ 💕",
-                intro: "亲爱的 {{name_to}}，<br>在这个拥有数十亿人的世界里，你在我心中找到了一个特殊的位置。<br>你的笑容点亮了我的世界，你的存在让一切都变得更美好。<br>我无法想象没有你在身边庆祝这个充满爱的日子。",
-                question: "你愿意给我这个荣幸，做我的情人吗？ 🌹",
+                title: "💕 {{name_to}}，你愿意做我的女朋友吗？ 💕",
+                intro: "亲爱的 {{name_to}}，<br>背后的每一张照片，都是属于我们的故事。<br>我每天都在更爱你——你的笑容、你的温柔，还有你让平凡日子变得特别的方式。",
+                question: "{{name_to}}，你愿意正式成为我的女朋友吗？ 🌹",
                 yesBtn: "愿意！ 💖",
                 noBtn: "不愿意",
-                celebrationTitle: "🎉 太好了！ 🎉",
-                celebrationSparkles: "✨ 你让我成为了世界上最幸福的人！ ✨",
-                celebrationMessage: "谢谢你答应了！这个情人节将会是神奇的，因为我能和你一起度过。你对我来说意味着一切，我很感激生命中有你。让我们一起创造美好的回忆吧！ 💕",
-                celebrationEnd: "💖 情人节快乐！ 💖",
+                celebrationTitle: "🎉 你答应了！ 🎉",
+                celebrationSparkles: "✨ {{name_to}}，你让我成为世界上最幸福的人 ✨",
+                celebrationMessage: "从这一刻起，我正式属于你，{{name_to}}。我答应你，每一天、每一个小小的瞬间，都会选择你。",
+                celebrationEnd: "💖 我爱你，{{name_to}} 💖",
                 signature: "用我全部的爱，<br><span class=\"signature-name\">{{name_from}}</span> 💕",
                 noMessages: [
                     "你确定吗？ 😊",
@@ -436,34 +546,34 @@
                     "再给一次机会？ ✨",
                     "你知道你想答应的！ 😍"
                 ],
-                noMessageSuffix: "你愿意做我的情人吗？ 💕"
+                noMessageSuffix: "{{name_to}}，你愿意正式成为我的女朋友吗？ 💕"
             }
         };
 
-        // Change language function
         function changeLanguage(lang) {
             currentLang = lang;
-            
-            // Update active button
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById('lang' + (lang === 'en' ? 'En' : 'Zh')).classList.add('active');
-            
-            // Update page title with name_to
-            document.title = lang === 'en' ? `Will You Be My Valentine, ${name_to}? 💕` : `${name_to}，你愿意做我的情人吗？ 💕`;
-            
-            // Update all text elements (with name placeholders applied)
+
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            const langId = lang === 'en' ? 'En' : lang === 'th' ? 'Th' : 'Zh';
+            document.getElementById('lang' + langId).classList.add('active');
+
+            const names = namesFor(lang);
+            const titles = {
+                en: `Will You Be My Girlfriend, ${names.to}? 💕`,
+                th: `${names.to} เป็นแฟนกันนะ 💕`,
+                zh: `${names.to}，你愿意做我的女朋友吗？ 💕`
+            };
+            document.title = titles[lang];
+
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
                 if (translations[lang][key]) {
                     element.innerHTML = applyNames(translations[lang][key]);
                 }
             });
-            
-            // Reset no click count to update button text
+
             if (noClickCount > 0) {
-                const messageElement = document.querySelector('.message');
+                const messageElement = document.querySelector('#question .message');
                 if (messageElement && noClickCount <= translations[lang].noMessages.length) {
                     const messageIndex = Math.min(noClickCount - 1, translations[lang].noMessages.length - 1);
                     messageElement.innerHTML = applyNames(translations[lang].noMessages[messageIndex] + '<br><br>' + translations[lang].noMessageSuffix);
@@ -471,10 +581,22 @@
             }
         }
 
-        // Apply names and language on initial load
-        changeLanguage('en');
+        function buildCollage() {
+            const copies = Math.max(18, PHOTO_FILES.length * 2);
+            for (let i = 0; i < copies; i++) {
+                const frame = document.createElement('div');
+                frame.className = 'polaroid';
+                const img = document.createElement('img');
+                img.src = PHOTO_FILES[i % PHOTO_FILES.length];
+                img.alt = '';
+                frame.appendChild(img);
+                collage.appendChild(frame);
+            }
+        }
 
-        // Create floating hearts
+        changeLanguage('en');
+        buildCollage();
+
         function createHeart() {
             const heart = document.createElement('div');
             heart.className = 'heart';
@@ -483,16 +605,11 @@
             heart.style.animationDelay = Math.random() * 6 + 's';
             heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
             heartsContainer.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 10000);
+            setTimeout(() => heart.remove(), 10000);
         }
 
-        // Create hearts periodically
         setInterval(createHeart, 500);
 
-        // Yes button click
         yesBtn.addEventListener('click', function() {
             try {
                 if (typeof appier === 'function') {
@@ -510,8 +627,7 @@
 
             question.style.display = 'none';
             celebration.style.display = 'block';
-            
-            // Create confetti
+
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => {
                     const confetti = document.createElement('div');
@@ -520,49 +636,37 @@
                     confetti.style.background = ['#d63384', '#667eea', '#764ba2', '#f093fb', '#f5576c'][Math.floor(Math.random() * 5)];
                     confetti.style.animationDelay = Math.random() * 2 + 's';
                     document.body.appendChild(confetti);
-                    
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 3000);
+                    setTimeout(() => confetti.remove(), 3000);
                 }, i * 50);
             }
         });
 
-        // No button click
         noBtn.addEventListener('click', function() {
             noClickCount++;
             yesSize += 0.2;
             yesBtn.style.fontSize = yesSize + 'em';
             yesBtn.style.padding = (15 + noClickCount * 5) + 'px ' + (40 + noClickCount * 10) + 'px';
-            
-            // Move no button randomly
+
             const maxX = window.innerWidth - noBtn.offsetWidth - 100;
             const maxY = window.innerHeight - noBtn.offsetHeight - 100;
-            const randomX = Math.random() * maxX;
-            const randomY = Math.random() * maxY;
-            
             noBtn.style.position = 'absolute';
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
-            
-            // Add playful messages based on current language
+            noBtn.style.left = Math.random() * Math.max(maxX, 0) + 'px';
+            noBtn.style.top = Math.random() * Math.max(maxY, 0) + 'px';
+
             const messages = translations[currentLang].noMessages;
             const messageIndex = Math.min(noClickCount - 1, messages.length - 1);
-            const messageElement = document.querySelector('.message');
+            const messageElement = document.querySelector('#question .message');
             if (messageElement && noClickCount <= messages.length) {
-                messageElement.innerHTML = messages[messageIndex] + '<br><br>' + translations[currentLang].noMessageSuffix;
+                messageElement.innerHTML = applyNames(messages[messageIndex] + '<br><br>' + translations[currentLang].noMessageSuffix);
             }
         });
 
-        // Make no button harder to click after a few attempts
         noBtn.addEventListener('mouseenter', function() {
             if (noClickCount > 3) {
                 const maxX = window.innerWidth - noBtn.offsetWidth - 100;
                 const maxY = window.innerHeight - noBtn.offsetHeight - 100;
-                const randomX = Math.random() * maxX;
-                const randomY = Math.random() * maxY;
-                noBtn.style.left = randomX + 'px';
-                noBtn.style.top = randomY + 'px';
+                noBtn.style.left = Math.random() * Math.max(maxX, 0) + 'px';
+                noBtn.style.top = Math.random() * Math.max(maxY, 0) + 'px';
             }
         });
     </script>
