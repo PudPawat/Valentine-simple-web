@@ -256,6 +256,90 @@
             margin-bottom: 24px;
         }
 
+        .video-card {
+            margin: 8px auto 24px;
+            max-width: 420px;
+        }
+
+        .video-caption {
+            font-size: 1.05em !important;
+            margin-bottom: 12px !important;
+        }
+
+        .video-preview {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(214, 51, 132, 0.25);
+            background: #1a1024;
+            cursor: pointer;
+        }
+
+        .video-preview img {
+            width: 100%;
+            height: 360px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            background: #1a1024;
+        }
+
+        #loveVideo,
+        .love-video-frame {
+            display: none;
+            width: 100%;
+            max-height: 520px;
+            min-height: 360px;
+            border: 0;
+            border-radius: 18px;
+            background: #1a1024;
+        }
+
+        .video-card.playing .love-video-frame {
+            display: block;
+        }
+
+        .video-play-btn {
+            position: absolute;
+            inset: 0;
+            margin: auto;
+            width: 76px;
+            height: 76px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #d63384 100%);
+            color: white;
+            font-size: 1.6em;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-left: 6px;
+        }
+
+        .video-play-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .video-card.playing .video-preview {
+            display: none;
+        }
+
+        .video-card.playing #loveVideo {
+            display: block;
+        }
+
+        .play-text-btn {
+            margin-top: 14px;
+            min-width: 160px;
+        }
+
+        .video-card.playing .play-text-btn {
+            display: none;
+        }
+
         .sparkles {
             font-size: 1.6em;
             animation: sparkle 1s ease-in-out infinite;
@@ -437,6 +521,15 @@
                 Officially yours. I promise to keep choosing you, every day, in every little moment.
             </p>
             <p style="font-size: 1.8em; margin-top: 20px;" data-i18n="celebrationEnd">💖 I love you 💖</p>
+            <div class="video-card" id="videoCard">
+                <p class="video-caption" data-i18n="videoCaption">I made this for you 🎬</p>
+                <div class="video-preview" id="videoPreview">
+                    <img src="photos/video-poster.jpg" alt="" id="videoPoster">
+                    <button type="button" class="video-play-btn" id="playVideoBtn" aria-label="Play video">▶</button>
+                </div>
+                <button type="button" class="btn btn-yes play-text-btn" id="playVideoTextBtn" data-i18n="playVideo">Play ▶️</button>
+                <video id="loveVideo" playsinline controls preload="none" poster="photos/video-poster.jpg"></video>
+            </div>
             <div class="signature" data-i18n="signature">
                 With all my love,<br>
                 <span class="signature-name">PudPawat</span> 💕
@@ -509,6 +602,8 @@
                 celebrationSparkles: "✨ {{name_to}}, you just made me the happiest person alive ✨",
                 celebrationMessage: "Officially yours, {{name_to}}. I promise to keep choosing you, every day, in every little moment.",
                 celebrationEnd: "💖 I love you, {{name_to}} 💖",
+                videoCaption: "I made this for you 🎬",
+                playVideo: "Play ▶️",
                 signature: "With all my love,<br><span class=\"signature-name\">{{name_from}}</span> 💕",
                 noMessages: [
                     "Are you sure? 😊",
@@ -532,6 +627,8 @@
                 celebrationSparkles: "✨ ดีใจมากเลยนะ {{name_to}} ✨",
                 celebrationMessage: "จากนี้เป็นแฟนกันแล้วนะ สัญญาว่าจะทำให้เธอมีความสุขทุกวัน",
                 celebrationEnd: "💖 รักนะ {{name_to}} 💖",
+                videoCaption: "ทำคลิปนี้ให้เธอ 🎬",
+                playVideo: "เล่น ▶️",
                 signature: "รักนะ,<br><span class=\"signature-name\">{{name_from}}</span> 💕",
                 noMessages: [
                     "แน่ใจเหรอ? 😊",
@@ -555,6 +652,8 @@
                 celebrationSparkles: "✨ {{name_to}}，你让我成为世界上最幸福的人 ✨",
                 celebrationMessage: "从这一刻起，我正式属于你，{{name_to}}。我答应你，每一天、每一个小小的瞬间，都会选择你。",
                 celebrationEnd: "💖 我爱你，{{name_to}} 💖",
+                videoCaption: "这是我为你做的 🎬",
+                playVideo: "播放 ▶️",
                 signature: "用我全部的爱，<br><span class=\"signature-name\">{{name_from}}</span> 💕",
                 noMessages: [
                     "你确定吗？ 😊",
@@ -619,6 +718,49 @@
                 collage.appendChild(frame);
             }
         }
+
+        const LOVE_VIDEO_SRC = 'photos/proposal-video.mp4';
+        const LOVE_VIDEO_DRIVE = 'https://drive.google.com/file/d/1zyOaRXWQA4yIWEQLbaSmv4MK-utQoNb5/preview';
+        const videoCard = document.getElementById('videoCard');
+        const videoPreview = document.getElementById('videoPreview');
+        const playVideoBtn = document.getElementById('playVideoBtn');
+        const loveVideo = document.getElementById('loveVideo');
+
+        function showDriveVideo() {
+            if (document.querySelector('.love-video-frame')) return;
+            const iframe = document.createElement('iframe');
+            iframe.className = 'love-video-frame';
+            iframe.src = LOVE_VIDEO_DRIVE;
+            iframe.allow = 'autoplay; fullscreen';
+            iframe.setAttribute('allowfullscreen', '');
+            iframe.title = 'Proposal video';
+            loveVideo.style.display = 'none';
+            loveVideo.after(iframe);
+        }
+
+        function playLoveVideo() {
+            if (videoCard.classList.contains('playing')) return;
+            videoCard.classList.add('playing');
+            loveVideo.src = LOVE_VIDEO_SRC;
+            loveVideo.addEventListener('error', showDriveVideo, { once: true });
+            const playPromise = loveVideo.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(showDriveVideo);
+            }
+            // If the local file is still downloading or missing, fall back quickly.
+            setTimeout(function() {
+                if (loveVideo.readyState < 2) {
+                    showDriveVideo();
+                }
+            }, 800);
+        }
+
+        videoPreview.addEventListener('click', playLoveVideo);
+        playVideoBtn.addEventListener('click', function(event) {
+            event.stopPropagation();
+            playLoveVideo();
+        });
+        document.getElementById('playVideoTextBtn').addEventListener('click', playLoveVideo);
 
         changeLanguage('en');
         buildCollage();
